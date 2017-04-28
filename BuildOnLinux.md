@@ -55,14 +55,13 @@ To build YaPySerial use Code::Blocks, the target is POSIX.
 To build device runtime systems use Code::Blocks with Debug targets.
 
  # Optional
- get and build CanFestival-3:
- 
-```
+ Get and build CanFestival-3:
+```bash
 hg clone http://dev.automforge.net/CanFestival-3
 cd ~/YAPLC/CanFestival-3
 ./configure --can=virtual
 make
-
+```
  # Runing YAPLC/IDE
 ```bash
 cd ~/YAPLC/IDE
