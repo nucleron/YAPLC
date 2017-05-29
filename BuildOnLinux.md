@@ -1,4 +1,5 @@
- # Install dependencies:
+ # Build YAPLC on GNU/Linux
+ ## Install dependencies:
 ```bash
 sudo apt-get install codeblocks
 sudo apt-get install build-essential bison flex autoconf
@@ -8,7 +9,9 @@ sudo apt-get install python-numpy python-nevow python-matplotlib python-lxml
 You should also install
 https://launchpad.net/gcc-arm-embedded
 
- # Preparations
+Add arm-none-eabi-gcc toolchain to Code::Blocks IDE
+
+ ## Preparations
 ```bash
 mkdir ~/YAPLC
 cd ~/YAPLC
@@ -27,7 +30,7 @@ git clone https://github.com/nucleron/libopencm3.git
 git clone https://github.com/nucleron/YaPySerial.git
 ```
 
- # Build
+ ## Build
 
 Build matiec:
 ```bash
@@ -54,7 +57,7 @@ make
 To build YaPySerial use Code::Blocks, the target is POSIX.
 To build device runtime systems use Code::Blocks with Debug targets.
 
- # Optional
+ ## Optional
  Get and build CanFestival-3:
 ```bash
 hg clone http://dev.automforge.net/CanFestival-3
@@ -62,8 +65,28 @@ cd ~/YAPLC/CanFestival-3
 ./configure --can=virtual
 make
 ```
- # Runing YAPLC/IDE
+ ## Runing YAPLC/IDE
 ```bash
 cd ~/YAPLC/IDE
 python yaplcide.py
+```
+
+ # Cross build Win setup
+Install dependencies as described above
+ ## Preparations
+Clone this repo
+```bash
+mkdir ~/Build
+cd ~/Build
+git clone https://github.com/nucleron/YAPLC.git
+```
+ ## Make it
+```bash
+cd YAPLC
+make
+```
+
+ ## Clean installer
+```bash
+make clean_installer
 ```
