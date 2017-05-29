@@ -1,0 +1,12 @@
+License, Use and Redistribution
+This distribution comes with several packages included:
+- YAPLC/IDE  is licensed under the "GNU GENERAL PUBLIC LICENSE V3"
+- YAPLC/RTE is licensed under the "Yet Another Public License V 1.0"
+- Beremiz is licensed under the "GNU GENERAL PUBLIC LICENSE V2 or later"
+- Beremiz PLC runtime code is licensed "GNU LESSER GENERAL PUBLIC LICENSE V2 or later"
+- matiec is licensed under the "GNU GENERAL PUBLIC LICENSE V3 or later" 
+- stm32flash is licensed under the "GNU GENERAL PUBLIC LICENSE V2"
+- YaPySerial is licensed under the "GNU GENERAL PUBLIC LICENSE V2"
+- libopencm3 - is licensed under the "GNU LESSER GENERAL PUBLIC LICENSE V3"
+- freemodbus is licensed under the "3 clause BSD license"
+- wxWidgets, wxPython is currently licensed under the "wxWindows Licence". Refer to http://www.wxwidgets.org/about/licence3.txt

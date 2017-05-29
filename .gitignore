@@ -1,0 +1,31 @@
+# Backup files #
+################
+*~
+*.orig
+*.swp
+
+# Executable #
+*.exe
+
+# Directory files #
+###################
+*directory
+
+# Build generated files #
+#########################
+examples*
+build*
+beremiz
+canfestival
+matiec
+mingw
+python
+IDE
+arm_tools
+dynlib
+firmware
+stm32flash
+
+# Archives in distfiles #
+distfiles/*
+!*.md5
