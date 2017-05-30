@@ -73,6 +73,10 @@ rm -rf $(1)
 $(call hg_get_archive, $(1), $(2))
 endef
 
+define git_get_rev_num
+git -C  $(HGROOT)/`basename $(1)` rev-list --full-history --all --abbrev-commit | head -1 > $(2)
+endef
+
 define get_src_git
 rm -rf $(1)
 mkdir $(1)
@@ -291,7 +295,7 @@ examples: |build
 beremiz: | build examples
 	$(call get_src_nucleron)
 	$(call get_src_git,build/beremiz)
-	$(call hg_get_rev_num,beremiz,build/beremiz/revision)
+	$(call git_get_rev_num,beremiz,build/beremiz/revision)
 	$(call tweak_beremiz_targets)
 	rm -rf examples/canopen_tests
 	mkdir -p examples/canopen_tests
