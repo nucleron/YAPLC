@@ -10,3 +10,4 @@ This distribution comes with several packages included:
 - libopencm3 - is licensed under the "GNU LESSER GENERAL PUBLIC LICENSE V3"
 - freemodbus is licensed under the "3 clause BSD license"
 - wxWidgets, wxPython is currently licensed under the "wxWindows Licence". Refer to http://www.wxwidgets.org/about/licence3.txt
+- GNU ARM Embedded Toolchain components are licensed under the set of open source licenses, see https://launchpad.net/gcc-arm-embedded for details.

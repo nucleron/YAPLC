@@ -27,7 +27,7 @@
 #           in case it would be a problem, run :
 #           xvfb-run make -f /path/to/this/Makefile
 
-version = 0.9.11
+version = 1.0.0
 
 HGROOT := ~/src
 GITROOT := $(HGROOT)
@@ -119,8 +119,8 @@ fi
 if [ ! -d $(GITROOT)/RTE ]; then \
 	git clone https://github.com/nucleron/RTE.git $(GITROOT)/RTE; \
 fi
-if [ ! -d $(GITROOT)/freemodbus-v1.5.0 ]; then \
-	git clone https://github.com/nucleron/freemodbus-v1.5.0.git $(GITROOT)/freemodbus-v1.5.0; \
+if [ ! -d $(GITROOT)/libremodbus ]; then \
+	git clone https://github.com/nucleron/libremodbus.git $(GITROOT)/libremodbus; \
 fi
 if [ ! -d $(GITROOT)/YaPySerial ]; then \
 	git clone https://github.com/nucleron/YaPySerial.git $(GITROOT)/YaPySerial; \
@@ -347,12 +347,12 @@ dynlib: | build
 	mv $(tmp)/YaPySerial/* $(dynlibdir)
 	touch $@
 
-fmbdir = build/freemodbus-v1.5.0
+fmbdir = build/libremodbus
 libopencm3dir = build/libopencm3
 rtedir = build/RTE
 firmware: | build 
 	$(call get_src_nucleron)
-	$(call get_src_git,$(tmp)/freemodbus-v1.5.0)
+	$(call get_src_git,$(tmp)/libremodbus)
 	$(call get_src_git,$(tmp)/libopencm3)
 	$(call get_src_git,$(tmp)/RTE)
 	cd $(tmp)/libopencm3 ;\
@@ -363,7 +363,7 @@ firmware: | build
 	find . -name "*.[oda]" -exec rm {} ';'
 	rm -rf $(fmbdir)
 	mkdir -p $(fmbdir)
-	mv $(tmp)/freemodbus-v1.5.0/* $(fmbdir)
+	mv $(tmp)/libremodbus/* $(fmbdir)
 	rm -rf $(libopencm3dir)
 	mkdir -p $(libopencm3dir)
 	mv $(tmp)/libopencm3/* $(libopencm3dir)
