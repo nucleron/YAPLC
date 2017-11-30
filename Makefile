@@ -20,6 +20,7 @@
 #  - libtool
 #  - xmlstarlet
 #  - xsltproc
+#  - python-lxml
 #  - Code::Blocks
 #  - GNU ARM embedded toolchain
 #
@@ -27,7 +28,7 @@
 #           in case it would be a problem, run :
 #           xvfb-run make -f /path/to/this/Makefile
 
-version = 1.0.0
+version = 1.0.1-rc0
 
 HGROOT := ~/src
 GITROOT := $(HGROOT)
@@ -89,7 +90,7 @@ dld=$(distfiles)/`echo $(2) | tr ' ()' '___'`;( ( [ -f $$dld ] || wget $(1)/$(2)
 endef
 
 define get_src_pypi
-$(call get_src_http,http://pypi.python.org/packages/$(1),$(2))
+$(call get_src_http,https://pypi.python.org/packages/$(1),$(2))
 endef
 
 define get_src_sf
@@ -168,7 +169,7 @@ mingw: |build
 	# mingw headers and lib
 	$(call get_mingw,mingwrt/mingwrt-3.20,mingwrt-3.20-2-mingw32-dev.tar.lzma)
 	# binutils
-	$(call get_mingw,binutils/binutils-2.21.53,binutils-2.21.53-1-mingw32-bin.tar.lzma)
+	$(call get_mingw,binutils/binutils-2.28,binutils-2.28-1-mingw32-bin.tar.xz)
 	# C compiler
 	$(call get_mingw,gcc/Version4/gcc-4.6.1-2,gcc-core-4.6.1-2-mingw32-bin.tar.lzma)
 	# dependencies
@@ -199,10 +200,11 @@ pysite = $(pydir)/Lib/site-packages
 python: |build
 	rm -rf $(pydir)
 	mkdir -p $(pydir)
+
 	# Python
 	$(call get_src_http,http://www.python.org/ftp/python/2.7.2,python-2.7.2.msi)\
 	$(msiexec) /qn /a $$dld TARGETDIR=.\\$(pydir)
-	
+
 	# WxPython (needs running inno unpacker in wine)
 	$(call get_src_sf,innounp/innounp/innounp%200.36,innounp036.rar)\
 	unrar e $$dld innounp.exe $(tmp)
@@ -210,7 +212,7 @@ python: |build
 	$(wine) $(tmp)/innounp.exe -d$(tmp) -x $$dld
 	cp -R $(tmp)/\{code_GetPythonDir\}/* $(pydir)
 	cp -R $(tmp)/\{app\}/* $(pysite)
-	
+
 	# wxPython fails if VC9.0 bullshit is not fully here.
 	$(call get_src_http,http://download.microsoft.com/download/1/1/1/1116b75a-9ec3-481a-a3c8-1777b5381140,vcredist_x86.exe)\
 	cp $$dld $(tmp)
@@ -221,47 +223,67 @@ python: |build
 	$(call get_src_http,https://github.com/downloads/matplotlib/matplotlib,matplotlib-1.2.0.win32-py2.7.exe)\
 	unzip -d $(tmp)/mathplotlib $$dld ; [ $$? -eq 1 ] #silence error unziping .exe
 	cp -R $(tmp)/mathplotlib/PLATLIB/* $(pysite)
-	
+
 	# pywin32
 	$(call get_src_sf,pywin32/pywin32/Build216,pywin32-216.win32-py2.7.exe)\
 	unzip -d $(tmp)/pw32 $$dld ; [ $$? -eq 1 ] #silence error unziping .exe
 	cp -R $(tmp)/pw32/PLATLIB/* $(pysite)
-	
+
 	# zope.interface
 	$(call get_src_pypi,9d/2d/beb32519c0bd19bda4ac38c34db417d563ee698518e582f951d0b9e5898b,zope.interface-4.3.2-py2.7-win32.egg)\
 	unzip -d $(tmp) $$dld
 	cp -R $(tmp)/zope $(pysite)
-	
+
 	# Twisted
 	$(call get_src_pypi,2.7/T/Twisted,Twisted-11.0.0.winxp32-py2.7.msi)\
 	$(msiexec) /qn /a $$dld TARGETDIR=.\\$(pydir)
-	
+
 	# Nevow
 	$(call get_src_pypi,source/N/Nevow,Nevow-0.10.0.tar.gz)\
 	tar -C $(tmp) -xzf $$dld
 	for i in nevow formless twisted; do cp -R $(tmp)/Nevow-0.10.0/$$i $(pysite); done
-	
+
 	# Numpy
 	$(call get_src_pypi,2.7/n/numpy,numpy-1.6.1.win32-py2.7.exe)\
 	unzip -d $(tmp)/np $$dld ; [ $$? -eq 1 ] #silence error unziping .exe
 	cp -R $(tmp)/np/PLATLIB/* $(pysite)
-	
+
 	# SimpleJson
 	$(call get_src_pypi,source/s/simplejson,simplejson-2.2.1.tar.gz)\
 	tar -C $(tmp) -xzf $$dld
 	cp -R $(tmp)/simplejson-2.2.1/simplejson/ $(pysite)
-	
-	# WxGlade
 
+	# Zeroconf
+	$(call get_src_pypi,6b/88/48dbe88b10098f98acef33218763c5630b0081c7fd0849ab4793b1e9b6d3,zeroconf-0.19.1-py2.py3-none-any.whl)\
+	unzip -d $(tmp)/zeroconf $$dld
+	cp -R $(tmp)/zeroconf/* $(pysite)
+
+	# Enum34
+	$(call get_src_pypi,c5/db/e56e6b4bbac7c4a06de1c50de6fe1ef3810018ae11732a50f15f62c7d050,enum34-1.1.6-py2-none-any.whl)\
+	unzip -d $(tmp)/enum34 $$dld
+	cp -R $(tmp)/enum34/* $(pysite)	
+
+	# netifaces
+	$(call get_src_pypi,05/00/c719457bcb8f14f9a7b9244c3c5e203c40d041a364cf784cf554aaef8129,netifaces-0.10.6-py2.7-win32.egg)\
+	unzip -d $(tmp)/netifaces $$dld
+	cp -R $(tmp)/netifaces/* $(pysite)	
+
+	# Six
+	$(call get_src_pypi,67/4b/141a581104b1f6397bfa78ac9d43d8ad29a7ca43ea90a2d863fe3056e86a,six-1.11.0-py2.py3-none-any.whl)\
+	unzip -d $(tmp)/six $$dld
+	cp -R $(tmp)/six/* $(pysite)	
+
+
+	# WxGlade
 	$(call get_src_http,https://bitbucket.org/wxglade/wxglade/get,034d891cc947.zip)\
 	unzip -d $(tmp) $$dld
 	mv $(tmp)/wxglade-wxglade-034d891cc947 $(pysite)/wxglade
-	
+
 	# Pyro
 	$(call get_src_pypi,source/P/Pyro,Pyro-3.9.1.tar.gz)\
 	tar -C $(tmp) -xzf $$dld
 	mv $(tmp)/Pyro-3.9.1/Pyro $(pysite)
-	
+
 	# Lxml
 	$(call get_src_pypi,2.7/l/lxml,lxml-3.2.3.win32-py2.7.exe)\
 	unzip -d $(tmp)/lxml $$dld ; [ $$? -eq 1 ] #silence error unziping .exe
