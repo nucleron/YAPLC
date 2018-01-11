@@ -28,7 +28,7 @@
 #           in case it would be a problem, run :
 #           xvfb-run make -f /path/to/this/Makefile
 
-version = 1.0.1-rc0
+version = 1.1.0
 
 HGROOT := ~/src
 GITROOT := $(HGROOT)
