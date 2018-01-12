@@ -65,4 +65,4 @@ YAPLC представляет собой набор программ и биб�
 
 
 # Скачать
-[Текущий релиз](https://github.com/nucleron/YAPLC/releases/tag/v1.0.0)
+[Текущий релиз](https://github.com/nucleron/YAPLC/releases/tag/v1.1.0)
