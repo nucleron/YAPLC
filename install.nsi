@@ -40,7 +40,7 @@ Section "Install"
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAPLC" "Contact" "main@nucleron.ru"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAPLC" "DisplayName" "YAPLC-IDE"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAPLC" "DisplayName" "YAPLC-$BVERSION"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAPLC" "Publisher" "Nucleron R&D LLC"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAPLC" "URLInfoAbout" "https://github.com/nucleron/yaplc"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAPLC" "UninstallString" "$INSTDIR\uninstall.exe"
@@ -53,7 +53,7 @@ Section "Shortcuts"
   CreateShortCut "$SMPROGRAMS\YAPLC\YAPLC-IDE.lnk" "${PYTHONW_EXE}" '${IDE_EXE}' "$INSTDIR\beremiz\images\brz.ico"
   CreateShortCut "$SMPROGRAMS\YAPLC\Uninstall.lnk" "$INSTDIR\uninstall.exe"
   SetShellVarContext current
-  CreateShortCut "$DESKTOP\YAPLC-IDE.lnk" "${PYTHONW_EXE}" '${IDE_EXE}' "$INSTDIR\beremiz\images\brz.ico"
+  CreateShortCut "$DESKTOP\YAPLC-IDE-$BVERSION.lnk" "${PYTHONW_EXE}" '${IDE_EXE}' "$INSTDIR\beremiz\images\brz.ico"
 SectionEnd
 
 Section "Uninstall"
